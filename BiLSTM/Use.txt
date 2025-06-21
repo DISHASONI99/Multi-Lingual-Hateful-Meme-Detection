@@ -1,0 +1,31 @@
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+import pickle
+
+# Load the saved model
+model = load_model("/kaggle/working/bilstm_model.keras")
+
+# Load the saved tokenizer
+with open("tokenizer.pkl", "rb") as f:
+    tokenizer = pickle.load(f)
+
+# Input text to predict
+text = ["I hate this movie"]
+
+# Make sure this matches the value used during training!
+max_len = max_len
+
+# Tokenize and pad
+sequence = tokenizer.texts_to_sequences(text)
+padded = pad_sequences(sequence, maxlen=max_len)
+
+# Predict
+prediction = model.predict(padded)
+
+# Convert to binary class
+predicted_class = int(prediction[0][0] > 0.7)
+
+# Print results
+print(f"Input: {text[0]}")
+print(f"Prediction probability: {prediction[0][0]:.4f}")
+print(f"Predicted class: {'Positive' if predicted_class else 'Negative'}")

@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+matplotlib
+deepface
+torch 
+torchvision 
+torchaudio
+transformers
+tf-keras
+tensorflow
+keras

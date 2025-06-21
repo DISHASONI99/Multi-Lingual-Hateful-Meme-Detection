@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Methodology Visualization</title>
+    <!-- Include React, ReactDOM, and Tailwind -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Additional custom styles can go here */
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Paste the React component code here (everything inside the React artifact)
+        const MethodologyVisualizer = () => {
+            const [activeTab, setActiveTab] = React.useState('extraction');
+            const [hoverElement, setHoverElement] = React.useState(null);
+
+            // Define colors for different sections
+            const colors = {
+                preprocessing: '#88CCEE',
+                visual: '#DDCC77',
+                textual: '#CC6677',
+                fusion: '#117733',
+                model: '#332288',
+                prediction: '#AA4499'
+            };
+
+            return (
+                <div className="flex flex-col w-full p-4 space-y-4">
+                    <div className="flex space-x-2 mb-4">
+                        <button
+                            className={`px-4 py-2 rounded ${activeTab === 'extraction' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                            onClick={() => setActiveTab('extraction')}
+                        >
+                            Feature Extraction Pipeline
+                        </button>
+                        <button
+                            className={`px-4 py-2 rounded ${activeTab === 'architecture' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                            onClick={() => setActiveTab('architecture')}
+                        >
+                            Model Architecture
+                        </button>
+                    </div>
+
+                    <div className="border rounded-lg p-4 bg-white shadow-lg min-h-64">
+                        {activeTab === 'extraction' ? (
+                            <svg viewBox="0 0 800 600" className="w-full">
+                                {/* Actor & Meme */}
+                                <rect x="320" y="20" width="160" height="60" stroke="black" fill="white" strokeWidth="2" />
+                                <text x="400" y="50" textAnchor="middle" fontWeight="bold">Actor</text>
+                                <text x="400" y="70" textAnchor="middle">Meme</text>
+
+                                {/* Arrow down */}
+                                <line x1="400" y1="80" x2="400" y2="120" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+
+                                {/* Preprocessing */}
+                                <polygon
+                                    points="320,120 480,120 450,180 350,180"
+                                    stroke="black"
+                                    fill={hoverElement === 'preprocessing' ? colors.preprocessing : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('preprocessing')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="400" y="140" textAnchor="middle">Rescaling</text>
+                                <text x="400" y="160" textAnchor="middle">Gaussian blurring</text>
+                                <text x="400" y="180" textAnchor="middle">Deskewing</text>
+
+                                {/* Preprocessing label */}
+                                <text x="610" y="120" textAnchor="start">Preprocessing Images</text>
+                                <line x1="550" y1="120" x2="590" y2="120" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+
+                                {/* Split to features */}
+                                <line x1="400" y1="180" x2="400" y2="220" stroke="black" strokeWidth="2" />
+                                <line x1="400" y1="220" x2="300" y2="220" stroke="black" strokeWidth="2" />
+                                <line x1="400" y1="220" x2="500" y2="220" stroke="black" strokeWidth="2" />
+                                <line x1="300" y1="220" x2="300" y2="260" stroke="black" strokeWidth="2" />
+                                <line x1="500" y1="220" x2="500" y2="260" stroke="black" strokeWidth="2" />
+
+                                {/* Textual Features */}
+                                <rect
+                                    x="240" y="260" width="120" height="80"
+                                    stroke="black"
+                                    fill={hoverElement === 'textual' ? colors.textual : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('textual')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="300" y="300" textAnchor="middle" fontWeight="bold">Textual</text>
+                                <text x="300" y="320" textAnchor="middle">Features</text>
+
+                                {/* Visual Features */}
+                                <rect
+                                    x="440" y="260" width="120" height="80"
+                                    stroke="black"
+                                    fill={hoverElement === 'visual' ? colors.visual : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('visual')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="500" y="300" textAnchor="middle" fontWeight="bold">Visual</text>
+                                <text x="500" y="320" textAnchor="middle">Features</text>
+
+                                {/* Text Processing */}
+                                <polygon
+                                    points="240,400 360,400 330,480 270,480"
+                                    stroke="black"
+                                    fill={hoverElement === 'text_process' ? colors.textual : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('text_process')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="300" y="420" textAnchor="middle">Stopwords</text>
+                                <text x="300" y="440" textAnchor="middle">Links</text>
+                                <text x="300" y="460" textAnchor="middle">Code Mixed</text>
+                                <text x="300" y="480" textAnchor="middle">Code Switched</text>
+
+                                {/* Text Processing label */}
+                                <text x="180" y="400" textAnchor="end">Preprocessing Text</text>
+                                <line x1="190" y1="400" x2="230" y2="400" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+
+                                {/* Visual Processing */}
+                                <polygon
+                                    points="440,400 560,400 530,480 470,480"
+                                    stroke="black"
+                                    fill={hoverElement === 'visual_process' ? colors.visual : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('visual_process')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="500" y="420" textAnchor="middle">Objects Detection</text>
+                                <text x="500" y="440" textAnchor="middle">Facial Expression</text>
+                                <text x="500" y="460" textAnchor="middle">Age</text>
+                                <text x="500" y="480" textAnchor="middle">Ethnicity</text>
+
+                                {/* Extra Features label */}
+                                <text x="650" y="400" textAnchor="start">Extra Features</text>
+                                <line x1="570" y1="400" x2="610" y2="400" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+
+                                {/* Word Embedding */}
+                                <polygon
+                                    points="250,520 350,520 380,560 220,560"
+                                    stroke="black"
+                                    fill={hoverElement === 'word_embed' ? colors.textual : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('word_embed')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="300" y="540" textAnchor="middle">Word Embedding</text>
+                                <text x="300" y="560" textAnchor="middle">Layers</text>
+
+                                {/* Feature Fusion */}
+                                <text x="650" y="540" textAnchor="start">Feature Fusion</text>
+                                <line x1="570" y1="540" x2="610" y2="540" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+
+                                {/* Final Features */}
+                                <rect
+                                    x="430" y="620" width="140" height="60"
+                                    rx="30" ry="30"
+                                    stroke="black"
+                                    fill={hoverElement === 'final' ? colors.fusion : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('final')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="500" y="650" textAnchor="middle" fontWeight="bold">Final Features</text>
+                                <text x="500" y="670" textAnchor="middle">Embeddings</text>
+
+                                {/* Connecting lines */}
+                                <line x1="300" y1="340" x2="300" y2="400" stroke="black" strokeWidth="2" />
+                                <line x1="500" y1="340" x2="500" y2="400" stroke="black" strokeWidth="2" />
+                                <line x1="300" y1="480" x2="300" y2="520" stroke="black" strokeWidth="2" />
+                                <line x1="300" y1="560" x2="300" y2="580" stroke="black" strokeWidth="2" />
+                                <line x1="300" y1="580" x2="500" y2="580" stroke="black" strokeWidth="2" />
+                                <line x1="500" y1="480" x2="500" y2="580" stroke="black" strokeWidth="2" />
+                                <line x1="500" y1="580" x2="500" y2="620" stroke="black" strokeWidth="2" />
+
+                                {/* Arrow definitions */}
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7"
+                                        refX="9" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" />
+                                    </marker>
+                                </defs>
+                            </svg>
+                        ) : (
+                            <svg viewBox="0 0 800 600" className="w-full">
+                                {/* Actor & Meme */}
+                                <rect x="120" y="80" width="120" height="60" stroke="black" fill="white" strokeWidth="2" />
+                                <text x="180" y="110" textAnchor="middle" fontWeight="bold">Actor</text>
+                                <text x="180" y="130" textAnchor="middle">Meme</text>
+
+                                {/* Final Features */}
+                                <rect x="120" y="300" width="120" height="60" stroke="black" fill="white" strokeWidth="2" />
+                                <text x="180" y="320" textAnchor="middle" fontWeight="bold">Final Features</text>
+                                <text x="180" y="340" textAnchor="middle">Embeddings</text>
+
+                                {/* Visual Baselines */}
+                                <rect
+                                    x="300" y="80" width="200" height="100"
+                                    stroke="black"
+                                    fill={hoverElement === 'visual_baseline' ? colors.visual : '#E6E6FA'}
+                                    strokeWidth="2"
+                                    rx="20" ry="20"
+                                    onMouseEnter={() => setHoverElement('visual_baseline')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="400" y="100" textAnchor="middle" fontWeight="bold">Visual Baselines</text>
+                                <text x="400" y="120" textAnchor="middle">Pretrained CNNs</text>
+                                <text x="400" y="140" textAnchor="middle">ResNet50</text>
+                                <text x="400" y="160" textAnchor="middle">DenseNet121</text>
+                                <text x="400" y="180" textAnchor="middle">VGG19/16</text>
+
+                                {/* Textual Baselines */}
+                                <rect
+                                    x="300" y="300" width="200" height="100"
+                                    stroke="black"
+                                    fill={hoverElement === 'textual_baseline' ? colors.textual : '#E6E6FA'}
+                                    strokeWidth="2"
+                                    rx="20" ry="20"
+                                    onMouseEnter={() => setHoverElement('textual_baseline')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="400" y="320" textAnchor="middle" fontWeight="bold">Textual Baselines</text>
+                                <text x="400" y="340" textAnchor="middle">LR, SVM, MNB</text>
+                                <text x="400" y="360" textAnchor="middle">Transformers</text>
+                                <text x="400" y="380" textAnchor="middle">BERT, XLM-R, ViT</text>
+
+                                {/* Visual Predictions */}
+                                <rect
+                                    x="550" y="80" width="60" height="100"
+                                    stroke="black"
+                                    fill={hoverElement === 'visual_pred' ? colors.visual : '#E6E6FA'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('visual_pred')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <circle cx="580" cy="110" r="10" fill={colors.visual} stroke="black" />
+                                <circle cx="580" cy="140" r="10" fill={colors.visual} stroke="black" />
+                                <circle cx="580" cy="170" r="10" fill={colors.visual} stroke="black" />
+
+                                {/* Textual Predictions */}
+                                <rect
+                                    x="550" y="300" width="60" height="100"
+                                    stroke="black"
+                                    fill={hoverElement === 'textual_pred' ? colors.textual : '#E6E6FA'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('textual_pred')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <circle cx="580" cy="330" r="10" fill={colors.textual} stroke="black" />
+                                <circle cx="580" cy="360" r="10" fill={colors.textual} stroke="black" />
+                                <circle cx="580" cy="390" r="10" fill={colors.textual} stroke="black" />
+
+                                {/* Multimodal Fusion */}
+                                <rect
+                                    x="650" y="200" width="120" height="80"
+                                    stroke="black"
+                                    fill={hoverElement === 'fusion' ? colors.fusion : 'white'}
+                                    strokeWidth="2"
+                                    rx="10" ry="10"
+                                    onMouseEnter={() => setHoverElement('fusion')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <text x="710" y="240" textAnchor="middle" fontWeight="bold">Multimodal</text>
+                                <text x="710" y="260" textAnchor="middle">Fusion</text>
+
+                                {/* Final Predictions */}
+                                <rect
+                                    x="650" y="360" width="60" height="100"
+                                    stroke="black"
+                                    fill={hoverElement === 'final_pred' ? colors.prediction : 'white'}
+                                    strokeWidth="2"
+                                    onMouseEnter={() => setHoverElement('final_pred')}
+                                    onMouseLeave={() => setHoverElement(null)}
+                                />
+                                <circle cx="680" cy="390" r="10" fill={colors.fusion} stroke="black" />
+                                <circle cx="680" cy="420" r="10" fill={colors.fusion} stroke="black" />
+                                <circle cx="680" cy="450" r="10" fill={colors.fusion} stroke="black" />
+
+                                {/* Decision Fusion */}
+                                <text x="720" y="480" textAnchor="middle">Decision Fusion</text>
+                                <polygon points="690,470 710,470 700,460" fill="black" />
+
+                                {/* Connecting lines */}
+                                <line x1="240" y1="110" x2="300" y2="110" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                                <line x1="240" y1="330" x2="300" y2="330" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                                <line x1="500" y1="130" x2="550" y2="130" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                                <line x1="500" y1="330" x2="550" y2="330" stroke="black" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                                <line x1="610" y1="130" x2="650" y2="200" stroke="#DAA520" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                                <line x1="610" y1="330" x2="650" y2="240" stroke="#DAA520" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                                <line x1="710" y1="280" x2="710" y2="360" stroke="#DAA520" strokeWidth="2" markerEnd="url(#arrowhead)" />
+
+                                {/* Arrow definitions */}
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7"
+                                        refX="9" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" />
+                                    </marker>
+                                </defs>
+                            </svg>
+                        )}
+                    </div>
+
+                    {/* Explanation panel */}
+                    <div className="bg-gray-100 p-4 rounded-lg">
+                        <h3 className="text-lg font-bold mb-2">
+                            {hoverElement ? `${hoverElement.replace('_', ' ').charAt(0).toUpperCase() + hoverElement.replace('_', ' ').slice(1)}` : 'Hover over elements for details'}
+                        </h3>
+
+                        {hoverElement === 'preprocessing' && (
+                            <p>Image preprocessing steps include rescaling to standard dimensions, applying Gaussian blur to reduce noise, and deskewing to correct orientation.</p>
+                        )}
+
+                        {hoverElement === 'textual' && (
+                            <p>Textual features are extracted from the meme text to understand linguistic patterns and semantic meaning.</p>
+                        )}
+
+                        {hoverElement === 'visual' && (
+                            <p>Visual features capture image elements, objects, scenes, and visual properties of the meme.</p>
+                        )}
+
+                        {hoverElement === 'text_process' && (
+                            <p>Text preprocessing involves removing stopwords, identifying links, handling code-mixed language (multiple languages in single text), and detecting code-switching patterns.</p>
+                        )}
+
+                        {hoverElement === 'visual_process' && (
+                            <p>Visual analysis includes object detection, facial expression recognition, and demographic attribute detection (age, ethnicity, gender).</p>
+                        )}
+
+                        {hoverElement === 'word_embed' && (
+                            <p>Text is transformed into numerical vectors using embedding techniques like FastText, word2vec, and GloVe to capture semantic relationships.</p>
+                        )}
+
+                        {hoverElement === 'final' && (
+                            <p>Final feature embeddings combine visual and textual features into unified representations for classification.</p>
+                        )}
+
+                        {hoverElement === 'visual_baseline' && (
+                            <p>Visual baseline models include pretrained CNNs like ResNet50, DenseNet121, Xception, and VGG architectures for image analysis.</p>
+                        )}
+
+                        {hoverElement === 'textual_baseline' && (
+                            <p>Textual models include traditional ML approaches (LR, SVM, MNB) and transformers like BERT, MuRIL, XLM-R, and Visual BERT.</p>
+                        )}
+
+                        {hoverElement === 'visual_pred' && (
+                            <p>Predictions from visual models based on image content analysis.</p>
+                        )}
+
+                        {hoverElement === 'textual_pred' && (
+                            <p>Predictions from textual models based on linguistic analysis.</p>
+                        )}
+
+                        {hoverElement === 'fusion' && (
+                            <p>Multimodal fusion combines insights from both visual and textual models to create more robust predictions.</p>
+                        )}
+
+                        {hoverElement === 'final_pred' && (
+                            <p>Final predictions after combining multiple modalities, representing the ultimate classification output.</p>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        // Render the component
+        ReactDOM.render(<MethodologyVisualizer />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
