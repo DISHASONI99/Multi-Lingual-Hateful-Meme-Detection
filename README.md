@@ -1,6 +1,6 @@
 # Multi-Lingual Hateful Meme Detection
 
-[![Watch Demo Video](/demo_video/Multi-LingualHatefulMemeDetection.gif)](./demo_video/Multi-Lingual%20Hateful%20Meme%20Detection%20Demo%20Video.mp4)
+[![Watch Demo Video](Multi-LingualHatefulMemeDetection.gif)](UI.mkv)
 
 ## Project Overview
 
@@ -50,7 +50,7 @@ The final dataset comprises 26,432 images, with facial features extracted from 8
 
 The system employs a two-pipeline architecture for comprehensive meme analysis:
 
-![Architecture of Complete Model](/Model%20Architecture%20Diagram/complete_architecture.png)
+![Architecture of Complete Model](complete_architecture.png)
 
 ### Pipeline-1: Multi-Modal Feature Extraction and Analysis
 
