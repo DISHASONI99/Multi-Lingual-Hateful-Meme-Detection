@@ -69,7 +69,7 @@ This pipeline leverages the rich feature set created in Pipeline-1 to train mult
 A demonstration video showcasing the system's capabilities is available below:
 
 <p align="center">
-  <a href="./demo_video/Multi-Lingual Hateful Meme Detection Demo Video.mp4">
+  <a href="UI.mkv">
     <img src="https://img.shields.io/badge/Watch%20Demo-Video-red?style=for-the-badge&logo=github" alt="Watch Demo Video" width="220">
   </a>
 </p>
